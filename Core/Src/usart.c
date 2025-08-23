@@ -79,5 +79,18 @@ void MX_USART1_UART_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+void UART1_Transmit(uint8_t *data, uint32_t length){
+    while (length > 0) {
+        while (!LL_USART_IsActiveFlag_TC(USART1));
+        LL_USART_TransmitData8(USART1,(*data & (uint8_t)0xff));
+        data++;
+        length--;
+    }
+}
+
+uint8_t UART1_Receive(){
+    while (!LL_USART_IsActiveFlag_RXNE(USART1));
+    return LL_USART_ReceiveData8(USART1);
+}
 
 /* USER CODE END 1 */
