@@ -107,9 +107,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 //  实验2-1：uart直接发送
-//    uint8_t str[11]={0};
-//    for(int i=0;i<10;i++)str[i] = i+1;
-//    HAL_UART_Transmit(&huart1, (uint8_t *)str, strlen(str), HAL_MAX_DELAY);
+    static uint8_t str[12];
+    for(int i=0;i<10;i++)str[i] = i+'a';
+    UART1_Transmit((uint8_t *)str, strlen(str));
 
 //  实验2-2：完成print功能
     DEBUG_PRINTF("this is a test: %u \n", 85);
