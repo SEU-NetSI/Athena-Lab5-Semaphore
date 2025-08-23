@@ -104,25 +104,28 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-	  DEBUG_PRINTF("this is a test: %u \n", 85);
-	  DEBUG_PRINTF("this is a test: %s \n","hello world");
-	  DEBUG_PRINTF("this is a test: %X \n",3439);
-//	  uint8_t str[3];
-//	  for(int i=0;i<3;i++)str[i] = i+1;
-//	  HAL_UART_Transmit(&huart1, (uint8_t *)str, strlen(str), HAL_MAX_DELAY);
-	    uint8_t data;
-	    data = UART1_Receive();
-	    while(data--)
-	    {
-	    	LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_9);
 
-	        LL_mDelay(100);
-	    }
+//  实验2-1：uart直接发送
+//    uint8_t str[11]={0};
+//    for(int i=0;i<10;i++)str[i] = i+1;
+//    HAL_UART_Transmit(&huart1, (uint8_t *)str, strlen(str), HAL_MAX_DELAY);
 
-	    LL_mDelay(2000);
+//  实验2-2：完成print功能
+    DEBUG_PRINTF("this is a test: %u \n", 85);
+    DEBUG_PRINTF("this is a test: %s \n","hello world");
+    DEBUG_PRINTF("this is a test: %X \n",3439);
 
+//  实验2-3：uart直接接收
+    uint8_t data;
+    data = UART1_Receive();
+    DEBUG_PRINTF("Input received: %d \n", data);
+    while(data--)
+    {
+      LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_9);
+      LL_mDelay(100);
+    }
+    LL_mDelay(2000);
   }
   /* USER CODE END 3 */
 }
