@@ -108,6 +108,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  DEBUG_PRINTF("this is a test: %u \n", 85);
 	  DEBUG_PRINTF("this is a test: %s \n","hello world");
+	  DEBUG_PRINTF("this is a test: %X \n",3439);
 //	  uint8_t str[3];
 //	  for(int i=0;i<3;i++)str[i] = i+1;
 //	  HAL_UART_Transmit(&huart1, (uint8_t *)str, strlen(str), HAL_MAX_DELAY);
