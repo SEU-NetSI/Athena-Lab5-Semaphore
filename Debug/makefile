@@ -60,8 +60,8 @@ all: main-build
 main-build: Athena_test.elf secondary-outputs
 
 # Tool invocations
-Athena_test.elf Athena_test.map: $(OBJS) $(USER_OBJS) D:\STM32\STM32CubeIDE\efficiency-2025\Athena_test\STM32L496RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Athena_test.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\STM32\STM32CubeIDE\efficiency-2025\Athena_test\STM32L496RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Athena_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Athena_test.elf Athena_test.map: $(OBJS) $(USER_OBJS) /Users/twinhorse/Career/teaching/计算机系统能力训练II/Lab-repos/Athena-Lab2-Uart-Answer/STM32L496RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Athena_test.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/twinhorse/Career/teaching/计算机系统能力训练II/Lab-repos/Athena-Lab2-Uart-Answer/STM32L496RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Athena_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
