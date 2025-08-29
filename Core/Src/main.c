@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -47,8 +48,32 @@
 
 /* USER CODE END PV */
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
+
+
+
+#define BUFFER_SIZE 5 //循环数组用作临界区
+static int g_shared_buffer[BUFFER_SIZE];
+
+//生产者读写位置
+static int g_write_index = 0;
+static int g_read_index = 0;
+
+SemaphoreHandle_t g_mutex = NULL;
+SemaphoreHandle_t g_empty_semaphore = NULL;
+SemaphoreHandle_t g_full_semaphore = NULL;
+
+// 生产者任务
+void vProducerTask(void *pvParameters);
+// 消费者任务
+void vConsumerTask(void *pvParameters);
+
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -78,6 +103,8 @@ int main(void)
   /* System interrupt init*/
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
+  /* PendSV_IRQn interrupt configuration */
+  NVIC_SetPriority(PendSV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
   /* SysTick_IRQn interrupt configuration */
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),15, 0));
 
@@ -99,35 +126,59 @@ int main(void)
 
   /* USER CODE END 2 */
 
+
+  MX_FREERTOS_Init();
+
+  /**
+   * TODO
+   * 一系列的初始化
+   */
+
+   xTaskCreate(vProducerTask,..........);//生产者任务 TODO
+
+   xTaskCreate(vConsumerTask,..........);//消费者任务 TODO
+
+   xTaskCreate(vConsumerTask,..........);//消费者任务 TODO
+
+   xTaskCreate(vConsumerTask,..........);//消费者任务 TODO
+
+
+
+
+
+
+
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
 
-//  实验2-1：uart直接发送
-    static uint8_t str[12];
-    for(int i=0;i<10;i++)str[i] = i+'a';
-    UART1_Transmit((uint8_t *)str, strlen(str));
 
-//  实验2-2：完成print功能
-    DEBUG_PRINTF("this is a test: %u \n", 85);
-    DEBUG_PRINTF("this is a test: %s \n","hello world");
-    DEBUG_PRINTF("this is a test: %X \n",3439);
 
-//  实验2-3：uart直接接收
-    uint8_t data;
-    data = UART1_Receive();
-    DEBUG_PRINTF("Input received: %d \n", data);
-    while(data--)
-    {
-      LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_9);
-      LL_mDelay(100);
-    }
-    LL_mDelay(2000);
   }
+
   /* USER CODE END 3 */
+}
+
+/**
+ * TODO:
+ * 生产者任务，待补充
+ */
+void vProducerTask(void *pvParameters) {
+
+}
+
+
+/**
+ * TODO:
+ * 消费者任务，待补充
+ */
+void vConsumerTask(void *pvParameters) {
+
 }
 
 /**
@@ -181,7 +232,7 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+  /* User can add his own imp lementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
